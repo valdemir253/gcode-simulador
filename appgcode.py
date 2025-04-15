@@ -123,6 +123,8 @@ if len(validos) == len(etapas):
 
         trajetos = interpretar_gcode(entradas)
 
+        from io import BytesIO
+
         fig2, ax2 = plt.subplots(figsize=(6, 6))
         ax2.set_aspect('equal')
         ax2.grid(True)
@@ -131,13 +133,19 @@ if len(validos) == len(etapas):
         ax2.set_title("Trajetória da Ferramenta")
 
         xdata, ydata = [], []
+        img_spot = st.empty()
 
         for ini, fim, _ in trajetos:
             xdata.extend([ini[0], fim[0]])
             ydata.extend([ini[1], fim[1]])
-            ax2.plot(xdata, ydata, 'r-', lw=2)
+            ax2.plot(xdata[-2:], ydata[-2:], 'r-', lw=2)
             ax2.plot(fim[0], fim[1], 'ro')
-            st.pyplot(fig2, clear_figure=True)
+
+            buf = BytesIO()
+            fig2.savefig(buf, format="png")
+            buf.seek(0)
+            img_spot.image(buf)
+
             time.sleep(0.2)
 
         st.success("✅ Trajetória executada com sucesso!")
