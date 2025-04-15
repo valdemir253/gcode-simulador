@@ -27,14 +27,14 @@ ax.grid(True)
 if peca == "Peça 1":
     ax.add_patch(patches.Rectangle((0, 0), 320, 180, fill=False, linewidth=2))
     ax.add_patch(patches.Circle((160, 90), 95/2, fill=False, linestyle='--', linewidth=2))
-    ax.text(160, -20, "320 x 180 mm\nFuro Ø95 mm", ha='center')
+    ax.text(160, -80, "320 x 180 mm\nFuro Ø95 mm", ha='center')
     ax.set_xlim(-50, 400)
     ax.set_ylim(-50, 250)
 
 elif peca == "Peça 2":
     ax.add_patch(patches.Circle((0, 0), 210, fill=False, linewidth=2))
     ax.add_patch(patches.Rectangle((-60, -60), 120, 120, fill=False, linestyle='--', linewidth=2))
-    ax.text(0, -230, "Ø420 mm\nFuro 120 x 120 mm", ha='center')
+    ax.text(0, -125, "Ø420 mm\nFuro 120 x 120 mm", ha='center')
     ax.set_xlim(-250, 250)
     ax.set_ylim(-250, 250)
 
@@ -42,7 +42,7 @@ elif peca == "Peça 3":
     ax.add_patch(patches.Rectangle((-120, -62.5), 240, 125, fill=False, linewidth=2))
     ax.add_patch(patches.FancyBboxPatch((-48, -25), 96, 50, boxstyle="Round,pad=0.02,rounding_size=10",
                                         fill=False, linestyle='--', linewidth=2))
-    ax.text(0, -80, "240 x 125 mm\nFuro 96 x 50 mm R10", ha='center')
+    ax.text(0, -50, "240 x 125 mm\nFuro 96 x 50 mm R10", ha='center')
     ax.set_xlim(-150, 150)
     ax.set_ylim(-100, 100)
 
