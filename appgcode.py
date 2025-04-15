@@ -1,16 +1,17 @@
-# app.py - Simulador interativo de G-code linha a linha com instruções (versão Streamlit)
+# app.py - Simulador interativo de G-code com orientação e animação da trajetória (Streamlit)
 
 import streamlit as st
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
+import time
 
 st.set_page_config(page_title="Simulador de G-code CNC", layout="centered")
 st.title("🛠️ Simulador de Trajetória CNC - G-code")
 
 # Peças disponíveis
 pecas = {
-    "Peça 1": "Retângulo 320x180 mm com furo Ø95 mm",
+    "Peça 1": "Retângulo 320x180 mm com furo Ø95 mm (centro em x=160, y=90)",
     "Peça 2": "Círculo Ø420 mm com furo quadrado 120x120 mm",
     "Peça 3": "Retângulo 240x125 mm com furo 96x50 mm (cantos R10)",
 }
@@ -24,11 +25,11 @@ ax.set_aspect('equal')
 ax.grid(True)
 
 if peca == "Peça 1":
-    ax.add_patch(patches.Rectangle((-160, -90), 320, 180, fill=False, linewidth=2))
-    ax.add_patch(patches.Circle((0, 0), 95/2, fill=False, linestyle='--', linewidth=2))
-    ax.text(0, -100, "320 x 180 mm\nFuro Ø95 mm", ha='center')
-    ax.set_xlim(-200, 200)
-    ax.set_ylim(-120, 120)
+    ax.add_patch(patches.Rectangle((0, 0), 320, 180, fill=False, linewidth=2))
+    ax.add_patch(patches.Circle((160, 90), 95/2, fill=False, linestyle='--', linewidth=2))
+    ax.text(160, -20, "320 x 180 mm\nFuro Ø95 mm", ha='center')
+    ax.set_xlim(-50, 400)
+    ax.set_ylim(-50, 250)
 
 elif peca == "Peça 2":
     ax.add_patch(patches.Circle((0, 0), 210, fill=False, linewidth=2))
@@ -55,7 +56,7 @@ etapas = [
     ("Digite o código de avanço linear para X320 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X320 Y180"),
     ("Digite o código de avanço linear para X0 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y180"),
     ("Digite o código de avanço linear para X0 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y0"),
-    ("Digite o código de interpolação circular horário até X320 Y90 com centro I0 J90 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X320 Y90 I0 J90"),
+    ("Digite o código de interpolação circular horário até X160 Y0 com centro I0 J-90 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X160 Y0 I0 J-90"),
     ("Digite o código de finalização do programa (comando M30).", lambda entrada: entrada.strip().upper() == "M30")
 ]
 
@@ -67,7 +68,7 @@ validos = []
 executar = False
 
 for i, (instrucao, validador) in enumerate(etapas):
-    entrada = st.text_input(f"Linha {i+1}", key=f"linha_{i}")
+    entrada = st.text_input(f"Linha {i+1}", key=f"linha_{i}", label_visibility="collapsed")
     st.caption(f"ℹ️ {instrucao}")
     if entrada:
         if validador(entrada):
@@ -80,10 +81,8 @@ for i, (instrucao, validador) in enumerate(etapas):
         break
 
 if len(validos) == len(etapas):
-    executar = st.button("✅ Executar Simulação da Trajetória")
+    if st.button("✅ Executar Simulação da Trajetória"):
 
-    if executar:
-        # Interpretação
         def interpretar_gcode(linhas):
             posicoes = []
             pos_atual = np.array([0.0, 0.0])
@@ -113,7 +112,7 @@ if len(validos) == len(etapas):
                         ang1 += 2 * np.pi
                     elif sentido == -1 and ang1 >= ang0:
                         ang1 -= 2 * np.pi
-                    angs = np.linspace(ang0, ang1, 30)
+                    angs = np.linspace(ang0, ang1, 40)
                     raio = np.linalg.norm(v0)
                     for a1, a2 in zip(angs[:-1], angs[1:]):
                         p1 = centro + raio * np.array([np.cos(a1), np.sin(a1)])
@@ -131,13 +130,15 @@ if len(validos) == len(etapas):
         ax2.set_xlim(-50, 400)
         ax2.set_ylim(-50, 250)
 
-        trajeto_x, trajeto_y = [], []
+        xdata, ydata = [], []
         for ini, fim, _ in trajetos:
-            trajeto_x.extend([ini[0], fim[0], None])
-            trajeto_y.extend([ini[1], fim[1], None])
+            xdata.append(ini[0])
+            ydata.append(ini[1])
+            xdata.append(fim[0])
+            ydata.append(fim[1])
+            ax2.plot(xdata[-2:], ydata[-2:], 'r-', lw=2)
+            ax2.plot(fim[0], fim[1], 'ro')
+            st.pyplot(fig2)
+            time.sleep(0.2)
 
-        ax2.plot(trajeto_x, trajeto_y, 'r-', lw=2)
-        ax2.plot(trajeto_x, trajeto_y, 'k--', lw=1, alpha=0.3)
-        ax2.plot(trajeto_x[-2], trajeto_y[-2], 'ro', label="Ponto Final")
-
-        st.pyplot(fig2)
+        st.success("✅ Trajetória executada com sucesso!")
