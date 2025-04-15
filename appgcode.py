@@ -126,22 +126,18 @@ if len(validos) == len(etapas):
         fig2, ax2 = plt.subplots(figsize=(6, 6))
         ax2.set_aspect('equal')
         ax2.grid(True)
-        ax2.set_title("Trajetória da Ferramenta")
         ax2.set_xlim(-50, 400)
         ax2.set_ylim(-50, 250)
+        ax2.set_title("Trajetória da Ferramenta")
 
         xdata, ydata = [], []
+
         for ini, fim, _ in trajetos:
-            xdata.append(ini[0])
-            ydata.append(ini[1])
-            xdata.append(fim[0])
-            ydata.append(fim[1])
-            ax2.plot(xdata[-2:], ydata[-2:], 'r-', lw=2)
+            xdata.extend([ini[0], fim[0]])
+            ydata.extend([ini[1], fim[1]])
+            ax2.plot(xdata, ydata, 'r-', lw=2)
             ax2.plot(fim[0], fim[1], 'ro')
-            ax2.set_title("Trajetória da Ferramenta (em execução)")
             st.pyplot(fig2, clear_figure=True)
             time.sleep(0.2)
-            while ax2.lines:
-                ax2.lines.pop()
 
         st.success("✅ Trajetória executada com sucesso!")
