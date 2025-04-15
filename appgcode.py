@@ -155,6 +155,6 @@ if len(validos) == len(etapas):
             fig2.savefig(buf, format="png")
             buf.seek(0)
             img_spot.image(buf)
-            time.sleep(0.1)
+            time.sleep(0.5)
 
         st.success("✅ Trajetória executada com sucesso!")
