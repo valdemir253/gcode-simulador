@@ -138,7 +138,9 @@ if len(validos) == len(etapas):
             ydata.append(fim[1])
             ax2.plot(xdata[-2:], ydata[-2:], 'r-', lw=2)
             ax2.plot(fim[0], fim[1], 'ro')
-            st.pyplot(fig2)
+            ax2.set_title("Trajetória da Ferramenta (em execução)")
+            st.pyplot(fig2, clear_figure=True)
             time.sleep(0.2)
+            ax2.lines = []
 
         st.success("✅ Trajetória executada com sucesso!")
