@@ -27,7 +27,7 @@ ax.grid(True)
 if peca == "Peça 1":
     ax.add_patch(patches.Rectangle((0, 0), 320, 180, fill=False, linewidth=2))
     ax.add_patch(patches.Circle((160, 90), 90/2, fill=False, linestyle='--', linewidth=2))
-    ax.text(160, -20, "320 x 180 mm\nFuro Ø90 mm", ha='center')
+    ax.text(160, 0, "320 x 180 mm\nFuro Ø90 mm", ha='center')
     ax.set_xlim(-50, 400)
     ax.set_ylim(-50, 250)
 
