@@ -11,7 +11,7 @@ st.title("🛠️ Simulador de Trajetória CNC - G-code")
 
 # Peças disponíveis
 pecas = {
-    "Peça 1": "Retângulo 320x180 mm com furo Ø95 mm (centro em x=160, y=90)",
+    "Peça 1": "Retângulo 320x180 mm com furo Ø90 mm (centro em x=160, y=90)",
     "Peça 2": "Círculo Ø420 mm com furo quadrado 120x120 mm",
     "Peça 3": "Retângulo 240x125 mm com furo 96x50 mm (cantos R10)",
 }
@@ -26,8 +26,8 @@ ax.grid(True)
 
 if peca == "Peça 1":
     ax.add_patch(patches.Rectangle((0, 0), 320, 180, fill=False, linewidth=2))
-    ax.add_patch(patches.Circle((160, 90), 95/2, fill=False, linestyle='--', linewidth=2))
-    ax.text(160, -20, "320 x 180 mm\nFuro Ø95 mm", ha='center')
+    ax.add_patch(patches.Circle((160, 90), 90/2, fill=False, linestyle='--', linewidth=2))
+    ax.text(160, -20, "320 x 180 mm\nFuro Ø90 mm", ha='center')
     ax.set_xlim(-50, 400)
     ax.set_ylim(-50, 250)
 
@@ -57,7 +57,7 @@ etapas = [
     ("Digite o código de avanço linear para X0 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y180"),
     ("Digite o código de avanço linear para X0 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y0"),
         ("Digite o código de avanço linear para X227 Y90 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X227 Y90"),
-    ("Digite o código de interpolação circular horário até X227 Y90 com centro I10 J30 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X227 Y90 I10 J30"),
+    ("Digite o código de interpolação circular horário até X227 Y90 com centro I10 J45 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X227 Y90 I10 J45"),
     ("Digite o código de finalização do programa (comando M30).", lambda entrada: entrada.strip().upper() == "M30")
 ]
 
