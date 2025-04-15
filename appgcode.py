@@ -135,17 +135,25 @@ if len(validos) == len(etapas):
         xdata, ydata = [], []
         img_spot = st.empty()
 
-        for ini, fim, _ in trajetos:
+        n_frames = len(trajetos)
+        for i in range(n_frames):
+            ini, fim, _ = trajetos[i]
             xdata.extend([ini[0], fim[0]])
             ydata.extend([ini[1], fim[1]])
-            ax2.plot(xdata[-2:], ydata[-2:], 'r-', lw=2)
+
+            ax2.clear()
+            ax2.set_aspect('equal')
+            ax2.grid(True)
+            ax2.set_xlim(-50, 400)
+            ax2.set_ylim(-50, 250)
+            ax2.set_title(f"Trajetória da Ferramenta (Frame {i+1}/{n_frames})")
+            ax2.plot(xdata, ydata, 'r-', lw=2)
             ax2.plot(fim[0], fim[1], 'ro')
 
             buf = BytesIO()
             fig2.savefig(buf, format="png")
             buf.seek(0)
             img_spot.image(buf)
-
-            time.sleep(0.2)
+            time.sleep(0.05)
 
         st.success("✅ Trajetória executada com sucesso!")
