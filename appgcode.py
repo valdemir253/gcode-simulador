@@ -57,7 +57,7 @@ etapas = [
     ("Digite o código de avanço linear para X0 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y180"),
     ("Digite o código de avanço linear para X0 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y0"),
         ("Digite o código de avanço linear para X180 Y45 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X180 Y45"),
-    ("Digite o código de interpolação circular horário até X227 Y90 com centro I20 J45 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X227 Y90 I20 J45"),
+    ("Digite o código de interpolação circular horário até X227 Y90 com centro I0 J45 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X227 Y90 I0 J45"),
     ("Digite o código de finalização do programa (comando M30).", lambda entrada: entrada.strip().upper() == "M30")
 ]
 
