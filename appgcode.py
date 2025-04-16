@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
 import time
+from io import BytesIO
 
 st.set_page_config(page_title="Simulador de G-code CNC", layout="centered")
 st.title("🛠️ Simulador de Trajetória CNC - G-code")
@@ -48,18 +49,45 @@ elif peca == "Peça 3":
 
 st.pyplot(fig)
 
-# Etapas com instruções e validação
-etapas = [
-    ("Você deve digitar um nome para esse programa.", lambda entrada: len(entrada.strip()) > 0),
-    ("Digite o código de movimento rápido para X0 Y0 (comando G0).", lambda entrada: entrada.strip().upper() == "G0 X0 Y0"),
-    ("Digite o código de avanço linear para X320 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X320 Y0"),
-    ("Digite o código de avanço linear para X320 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X320 Y180"),
-    ("Digite o código de avanço linear para X0 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y180"),
-    ("Digite o código de avanço linear para X0 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y0"),
+# Etapas com instruções e validação por peça
+etapas_por_peca = {
+    "Peça 1": [
+        ("Você deve digitar um nome para esse programa.", lambda entrada: len(entrada.strip()) > 0),
+        ("Digite o código de movimento rápido para X0 Y0 (comando G0).", lambda entrada: entrada.strip().upper() == "G0 X0 Y0"),
+        ("Digite o código de avanço linear para X320 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X320 Y0"),
+        ("Digite o código de avanço linear para X320 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X320 Y180"),
+        ("Digite o código de avanço linear para X0 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y180"),
+        ("Digite o código de avanço linear para X0 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y0"),
         ("Digite o código de avanço linear para X160 Y45 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X160 Y45"),
-    ("Digite o código de interpolação circular horário até X160 Y45 com centro I0 J45 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X160 Y45 I0 J45"),
-    ("Digite o código de finalização do programa (comando M30).", lambda entrada: entrada.strip().upper() == "M30")
-]
+        ("Digite o código de interpolação circular horário até X160 Y45 com centro I0 J45 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X160 Y45 I0 J45"),
+        ("Digite o código de finalização do programa (comando M30).", lambda entrada: entrada.strip().upper() == "M30")
+    ],
+    "Peça 2": [
+        ("Nome do programa.", lambda entrada: len(entrada.strip()) > 0),
+        ("Movimento rápido para X0 Y-210.", lambda entrada: entrada.strip().upper() == "G0 X0 Y-210"),
+        ("Interpolação circular anti-horária até X0 Y210 I0 J210.", lambda entrada: entrada.strip().upper() == "G3 X0 Y210 I0 J210"),
+        ("Interpolação circular anti-horária até X0 Y-210 I0 J-210.", lambda entrada: entrada.strip().upper() == "G3 X0 Y-210 I0 J-210"),
+        ("Movimento rápido para X-60 Y-60.", lambda entrada: entrada.strip().upper() == "G0 X-60 Y-60"),
+        ("Avanço linear até X60 Y-60.", lambda entrada: entrada.strip().upper() == "G1 X60 Y-60"),
+        ("Avanço linear até X60 Y60.", lambda entrada: entrada.strip().upper() == "G1 X60 Y60"),
+        ("Avanço linear até X-60 Y60.", lambda entrada: entrada.strip().upper() == "G1 X-60 Y60"),
+        ("Avanço linear até X-60 Y-60.", lambda entrada: entrada.strip().upper() == "G1 X-60 Y-60"),
+        ("Final do programa.", lambda entrada: entrada.strip().upper() == "M30")
+    ],
+    "Peça 3": [
+        ("Nome do programa.", lambda entrada: len(entrada.strip()) > 0),
+        ("Movimento rápido para X-120 Y-62.5.", lambda entrada: entrada.strip().upper() == "G0 X-120 Y-62.5"),
+        ("Avanço linear até X120 Y-62.5.", lambda entrada: entrada.strip().upper() == "G1 X120 Y-62.5"),
+        ("Avanço linear até X120 Y62.5.", lambda entrada: entrada.strip().upper() == "G1 X120 Y62.5"),
+        ("Avanço linear até X-120 Y62.5.", lambda entrada: entrada.strip().upper() == "G1 X-120 Y62.5"),
+        ("Avanço linear até X-120 Y-62.5.", lambda entrada: entrada.strip().upper() == "G1 X-120 Y-62.5"),
+        ("Movimento rápido para X-48 Y0.", lambda entrada: entrada.strip().upper() == "G0 X-48 Y0"),
+        ("Avanço linear até X48 Y0.", lambda entrada: entrada.strip().upper() == "G1 X48 Y0"),
+        ("Final do programa.", lambda entrada: entrada.strip().upper() == "M30")
+    ]
+}
+
+etapas = etapas_por_peca[peca]
 
 st.markdown("---")
 st.subheader("2 - Digite o G-code passo a passo:")
@@ -69,7 +97,7 @@ validos = []
 executar = False
 
 for i, (instrucao, validador) in enumerate(etapas):
-    entrada = st.text_input(f"Linha {i+1}", key=f"linha_{i}", label_visibility="collapsed")
+    entrada = st.text_input(f"Linha {i+1}", key=f"linha_{i}_{peca}", label_visibility="collapsed")
     st.caption(f"ℹ️ {instrucao}")
     if entrada:
         if validador(entrada):
@@ -124,13 +152,11 @@ if len(validos) == len(etapas):
 
         trajetos = interpretar_gcode(entradas)
 
-        from io import BytesIO
-
         fig2, ax2 = plt.subplots(figsize=(6, 6))
         ax2.set_aspect('equal')
         ax2.grid(True)
-        ax2.set_xlim(-50, 400)
-        ax2.set_ylim(-50, 250)
+        ax2.set_xlim(-250, 400)
+        ax2.set_ylim(-250, 250)
         ax2.set_title("Trajetória da Ferramenta")
 
         xdata, ydata = [], []
@@ -145,8 +171,8 @@ if len(validos) == len(etapas):
             ax2.clear()
             ax2.set_aspect('equal')
             ax2.grid(True)
-            ax2.set_xlim(-50, 400)
-            ax2.set_ylim(-50, 250)
+            ax2.set_xlim(-250, 400)
+            ax2.set_ylim(-250, 250)
             ax2.set_title(f"Trajetória da Ferramenta (Frame {i+1}/{n_frames})")
             ax2.plot(xdata, ydata, 'r-', lw=2)
             ax2.plot(fim[0], fim[1], 'ro')
