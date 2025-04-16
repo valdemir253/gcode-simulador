@@ -27,14 +27,14 @@ ax.grid(True)
 
 if peca == "Peça 1":
     ax.add_patch(patches.Rectangle((0, 0), 320, 180, fill=False, linewidth=2))
-    ax.add_patch(patches.Circle((160, 90), 90/2, fill=False, linestyle='--', linewidth=2))
+    ax.add_patch(patches.Circle((160, 90), 90/2, fill=False, linewidth=2))
     ax.text(160, 200, "320 x 180 mm\nFuro Ø90 mm", ha='center')
     ax.set_xlim(-50, 400)
     ax.set_ylim(-50, 250)
 
 elif peca == "Peça 2":
     ax.add_patch(patches.Circle((0, 0), 210, fill=False, linewidth=2))
-    ax.add_patch(patches.Rectangle((-60, -60), 120, 120, fill=False, linestyle='--', linewidth=2))
+    ax.add_patch(patches.Rectangle((-60, -60), 120, 120, fill=False, linewidth=2))
     ax.text(0, 100, "Ø420 mm\nFuro 120 x 120 mm", ha='center')
     ax.set_xlim(-250, 250)
     ax.set_ylim(-250, 250)
