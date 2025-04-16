@@ -58,7 +58,7 @@ etapas_por_peca = {
         ("Digite o código de avanço linear para X0 Y180 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y180"),
         ("Digite o código de avanço linear para X0 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X0 Y0"),
         ("Digite o código de avanço linear para X160 Y45 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X160 Y45"),
-        ("Digite o código de interpolação circular horário até X160 Y45 com centro I0 J45 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X160 Y45 I0 J45"),
+        ("Digite o código de interpolação circular horário até X160 Y45 I0 J45 (comando G2).", lambda entrada: entrada.strip().upper() == "G2 X160 Y45 I0 J45"),
         ("Digite o código de finalização do programa (comando M30).", lambda entrada: entrada.strip().upper() == "M30")
     ],
     "Peça 2": [
