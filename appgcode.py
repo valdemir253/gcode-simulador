@@ -76,14 +76,14 @@ etapas_por_peca = {
     ],
     "Peça 3": [
         ("Nome do programa.", lambda entrada: len(entrada.strip()) > 0),
-        ("Movimento rápido para X-120 Y-62.5.", lambda entrada: entrada.strip().upper() == "G0 X-120 Y-62.5"),
-        ("Avanço linear até X120 Y-62.5.", lambda entrada: entrada.strip().upper() == "G1 X120 Y-62.5"),
-        ("Avanço linear até X120 Y62.5.", lambda entrada: entrada.strip().upper() == "G1 X120 Y62.5"),
-        ("Avanço linear até X-120 Y62.5.", lambda entrada: entrada.strip().upper() == "G1 X-120 Y62.5"),
-        ("Avanço linear até X-120 Y-62.5.", lambda entrada: entrada.strip().upper() == "G1 X-120 Y-62.5"),
-        ("Movimento rápido para X-48 Y0.", lambda entrada: entrada.strip().upper() == "G0 X-48 Y0"),
-        ("Avanço linear até X48 Y0.", lambda entrada: entrada.strip().upper() == "G1 X48 Y0"),
-        ("Final do programa.", lambda entrada: entrada.strip().upper() == "M30")
+        ("Movimento rápido para X-120 Y-62.5 (comando G0).", lambda entrada: entrada.strip().upper() == "G0 X-120 Y-62.5"),
+        ("Avanço linear até X120 Y-62.5 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X120 Y-62.5"),
+        ("Avanço linear até X120 Y62.5 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X120 Y62.5"),
+        ("Avanço linear até X-120 Y62.5 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X-120 Y62.5"),
+        ("Avanço linear até X-120 Y-62.5 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X-120 Y-62.5"),
+        ("Movimento rápido para X-48 Y0 (comando G0).", lambda entrada: entrada.strip().upper() == "G0 X-48 Y0"),
+        ("Avanço linear até X48 Y0 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X48 Y0"),
+        ("Final do programa (comando M30).", lambda entrada: entrada.strip().upper() == "M30")
     ]
 }
 
