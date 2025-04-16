@@ -8,7 +8,7 @@ import time
 from io import BytesIO
 
 st.set_page_config(page_title="Simulador de G-code CNC", layout="centered")
-st.title("🛠️ Simulador de Trajetória CNC - G-code")
+st.title("🛠️ Simulador de Trajetória- G-code\nwww.mestre-federal.com\nProf. Valdemir IFSP campus Guarulhos")
 
 # Peças disponíveis
 pecas = {
