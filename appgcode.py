@@ -64,15 +64,15 @@ etapas_por_peca = {
     ],
     "Peça 2": [
         ("Nome do programa.", lambda entrada: len(entrada.strip()) > 0),
-        ("Movimento rápido para X0 Y-210.", lambda entrada: entrada.strip().upper() == "G0 X0 Y-210"),
-        ("Interpolação circular anti-horária até X0 Y210 I0 J210.", lambda entrada: entrada.strip().upper() == "G3 X0 Y210 I0 J210"),
-        ("Interpolação circular anti-horária até X0 Y-210 I0 J-210.", lambda entrada: entrada.strip().upper() == "G3 X0 Y-210 I0 J-210"),
-        ("Movimento rápido para X-60 Y-60.", lambda entrada: entrada.strip().upper() == "G0 X-60 Y-60"),
-        ("Avanço linear até X60 Y-60.", lambda entrada: entrada.strip().upper() == "G1 X60 Y-60"),
-        ("Avanço linear até X60 Y60.", lambda entrada: entrada.strip().upper() == "G1 X60 Y60"),
-        ("Avanço linear até X-60 Y60.", lambda entrada: entrada.strip().upper() == "G1 X-60 Y60"),
-        ("Avanço linear até X-60 Y-60.", lambda entrada: entrada.strip().upper() == "G1 X-60 Y-60"),
-        ("Final do programa.", lambda entrada: entrada.strip().upper() == "M30")
+        ("Movimento rápido para X0 Y-210 (comando G0).", lambda entrada: entrada.strip().upper() == "G0 X0 Y-210"),
+        ("Interpolação circular anti-horária até X0 Y210 I0 J210 (comando G3).", lambda entrada: entrada.strip().upper() == "G3 X0 Y210 I0 J210"),
+        ("Interpolação circular anti-horária até X0 Y-210 I0 J-210 (comando G3).", lambda entrada: entrada.strip().upper() == "G3 X0 Y-210 I0 J-210"),
+        ("Movimento rápido para X-60 Y-60 (comando G0).", lambda entrada: entrada.strip().upper() == "G0 X-60 Y-60"),
+        ("Avanço linear até X60 Y-60 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X60 Y-60"),
+        ("Avanço linear até X60 Y60 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X60 Y60"),
+        ("Avanço linear até X-60 Y60 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X-60 Y60"),
+        ("Avanço linear até X-60 Y-60 (comando G1).", lambda entrada: entrada.strip().upper() == "G1 X-60 Y-60"),
+        ("Final do programa (comando M30).", lambda entrada: entrada.strip().upper() == "M30")
     ],
     "Peça 3": [
         ("Nome do programa.", lambda entrada: len(entrada.strip()) > 0),
