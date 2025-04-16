@@ -43,7 +43,7 @@ elif peca == "Peça 3":
     ax.add_patch(patches.Rectangle((-120, -62.5), 240, 125, fill=False, linewidth=2))
     ax.add_patch(patches.FancyBboxPatch((-48, -25), 96, 50, boxstyle="Round,pad=0.02,rounding_size=10",
                                         fill=False, linestyle='--', linewidth=2))
-    ax.text(0, -80, "240 x 125 mm\nFuro 96 x 50 mm R10", ha='center')
+    ax.text(0, -110, "240 x 125 mm\nFuro 96 x 50 mm R10", ha='center')
     ax.set_xlim(-150, 150)
     ax.set_ylim(-100, 100)
 
