@@ -14,7 +14,7 @@ st.title("🛠️ Simulador de Trajetória CNC - G-code")
 pecas = {
     "Peça 1": "Retângulo 320x180 mm com furo Ø90 mm (centro em x=160, y=90)",
     "Peça 2": "Círculo Ø420 mm com furo quadrado 120x120 mm",
-    "Peça 3": "Retângulo 240x125 mm com furo 96x50 mm (cantos R10)",
+    "Peça 3": "Retângulo 240x125 mm com furo quadrado 96x50 mm",
 }
 
 peca = st.selectbox("1 - Selecione uma das peças para gerar o G-code:", list(pecas.keys()))
@@ -41,9 +41,8 @@ elif peca == "Peça 2":
 
 elif peca == "Peça 3":
     ax.add_patch(patches.Rectangle((-120, -62.5), 240, 125, fill=False, linewidth=2))
-    ax.add_patch(patches.FancyBboxPatch((-48, -25), 96, 50, boxstyle="Round,pad=0.02,rounding_size=10",
-                                        fill=False, linestyle='--', linewidth=2))
-    ax.text(0, 35, "240 x 125 mm\nFuro 96 x 50 mm R10", ha='center')
+    ax.add_patch(patches.Rectangle((-60, -60), 96, 50, fill=False, linestyle='--', linewidth=2))
+    ax.text(0, 35, "240 x 125 mm\nFuro 96 x 50 mm", ha='center')
     ax.set_xlim(-150, 150)
     ax.set_ylim(-100, 100)
 
