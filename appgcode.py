@@ -35,7 +35,7 @@ if peca == "Peça 1":
 elif peca == "Peça 2":
     ax.add_patch(patches.Circle((0, 0), 210, fill=False, linewidth=2))
     ax.add_patch(patches.Rectangle((-60, -60), 120, 120, fill=False, linestyle='--', linewidth=2))
-    ax.text(0, -180, "Ø420 mm\nFuro 120 x 120 mm", ha='center')
+    ax.text(0, -150, "Ø420 mm\nFuro 120 x 120 mm", ha='center')
     ax.set_xlim(-250, 250)
     ax.set_ylim(-250, 250)
 
